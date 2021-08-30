@@ -1,15 +1,22 @@
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { addCreator } from "../redux/actions";
 import "./preview.css";
 
 let Preview = () => {
+  let { id } = useParams();
+  let dispatch = useDispatch();
+  let state = useSelector((state) => state);
+  let reqObject = state[id];
   return (
     <>
       <div className="preview-container">
         <div className="preview-img-container">
-          <img src="https://i.shgcdn.com/d28da852-3c05-408e-bde3-4aeb881e1a08/-/format/auto/-/preview/3000x3000/-/quality/lighter/" />
+          <img src={reqObject.img} />
         </div>
 
         <div className="preview-listing">
-          <h2>Title</h2>
+          <h2>{reqObject.name}</h2>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Non iste
             voluptas iusto earum reprehenderit sequi ratione quae numquam
@@ -18,7 +25,13 @@ let Preview = () => {
             nihil. Molestiae dolorem, voluptate eum vel deserunt commodi ut.
             Ipsa ipsam cupiditate incidunt.
           </p>
-          <button>Add to Cart</button>
+          <button
+            onClick={() => {
+              dispatch(addCreator(reqObject.id));
+            }}
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
     </>
